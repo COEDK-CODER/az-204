@@ -1,7 +1,26 @@
 ﻿@page "/"
 
+@inject IConfiguration Configuration
+
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
-Welcome to your AZ204 app.
+@if (Title is null)
+{
+    <p>Loading title...</p>
+}
+else
+{
+    <p><strong>App title:</strong> @Title</p>
+}
+
+@code {
+    private string? Title;
+
+    protected override void OnInitialized()
+    {
+        // Read "title" from appsettings.json
+        Title = Configuration["title"] ?? "Title not found";
+    }
+}
